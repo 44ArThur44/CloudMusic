@@ -18,33 +18,68 @@ End-to-end pipeline built with a decoupled agent architecture to generate music,
 
 Designed as an MVP with production-ready structure and extensibility.
 
-## Architecture
-Agent-based pipeline:
+### Core Technical Features
 
-MusicAgent → Storage → BillingAgent → MarketingAgent
+#### 🎵 **Pluggable AI Music Engine**
+- Production: MusicGen (Meta) via Replicate API
+- Development: Mock generator for rapid testing
+- Extensible architecture for Riffusion, Suno, Diff-Singer
+- Seamless engine swapping without pipeline disruption
 
-Each agent is isolated, testable, and replaceable.
+#### 🔒 **Stateless Access Control**
+- Anonymous user identification via MD5(IP + User-Agent)
+- Daily rate limiting 
+- Automated daily reset system
+- Priority queuing for paid credits
 
-## Key Features
-- Autonomous music generation (pluggable engine)
-- Usage limits with daily reset (IP-based)
-- Pay-per-use billing (Stripe Checkout + webhooks)
-- No login, no traditional database (file-based persistence)
-- Modular pipeline with logging
+#### 💳 **Integrated Monetization**
+- Stripe Checkout with webhook validation
+- Pay-per-use billing model
+- Explicit pipeline decisions (ALLOW/BLOCK)
+- No traditional login required
 
-## Tech Stack
-- Backend: Python, Flask
-- Frontend: Vanilla JS, HTML, CSS
-- AI: MusicGen (pluggable, mock supported)
-- Payments: Stripe
-- Storage: File-based (JSON, audio files)
+#### 🤖 **Automated Distribution**
+- Telegram Bot API integration
+- Multi-channel ready architecture (Instagram, X)
+- Automated media upload and messaging
+- Centralized logging and tracking
 
-## Status
-Functional MVP  
-End-to-end pipeline validated  
-Ready for deployment and scaling
+### Technical Stack
+
+| Layer | Technologies |
+|-------|--------------|
+| **Backend** | Python, Flask, Agent Architecture |
+| **Frontend** | Vanilla JS, HTML5, CSS Grid/Flex |
+| **AI/ML** | MusicGen (Replicate API), Pluggable Engine System |
+| **Payments** | Stripe Checkout, Webhooks |
+| **Storage** | JSON file-based (PostgreSQL/Supabase ready) |
+| **Infrastructure** | Scheduled pipeline (cron/Task Scheduler) |
+
+### Production Status
+- ✅ End-to-end pipeline validated
+- ✅ Modular architecture ready for scaling
+- ✅ Stateless persistence system
+- ✅ Centralized logging with full traceability
+- ✅ Production-ready MVP
+
+### Roadmap
+- Multi-platform distribution expansion
+- Relational database migration
+- Additional AI music engines
+- Integrated analytics dashboard
+- Public API for third-party integrations
+
+---
+
+**Architecture:** Decoupled Agent-Based System  
+**Availability:** 24/7 automated pipeline  
+**Extensibility:** Plug-and-play modules without refactoring
+  
 
 <p align="center">
-  &copy; Arthur Vesaro
+  &copy; <a href="https://www.linkedin.com/in/arthur-vesaro-798318239/" target="_blank" rel="noopener noreferrer">
+    Arthur Vesaro
+  </a>
 </p>
+
 
