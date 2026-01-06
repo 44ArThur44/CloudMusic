@@ -1,18 +1,19 @@
-#  CloudMusic Generator
+# CloudMusic Generator
 
-## 🎯 Objetivo
-Pipeline autônomo para geração de música com I.A., com controle de acesso vai endereço IP e User-Agent, gestão de consumo e automação de publicações para redes sociais.
-
----
-
-## Configuração do Ambiente
-Desenvolvido em **Python 3.8**, com compatibilidade em Python **3.10** (5/5) e **3.11.** (5/3)
-
-–> **venv** Ambiente virtual para isolar as dependências do projeto
+## 🎯 Objective
+Autonomous pipeline for AI music generation with IP & User-Agent access control, usage management, and automated social media publishing.
 
 ---
 
-##  Estrutura do Projeto
+## Environment Setup
+Developed in **Python 3.8**, compatible with **3.10** (5/5) and **3.11** (5/3)
+
+–> **venv** Virtual environment to isolate project dependencies
+
+---
+
+## Project Structure
+
 
 CloudWalkMusic/
 ├─ venv/                      # Ambiente Python isolado
@@ -44,96 +45,99 @@ CloudWalkMusic/
 ├─ requirements.txt           # Dependências do projeto
 └─ README.md                  # Documentação principal
 
-**Arquitetura**
 
-Pipeline baseado em agentes, com responsabilidades definidas:
+**Architecture**
+
+Agent-based pipeline with defined responsibilities:
 
 **MusicAgent → Storage → BillingAgent → MarketingAgent**
 
+---
 
-## ✅ Status do Projeto
-*Pipeline autônomo end-to-end*
-Arquitetura orientada a agentes e desacoplada  
-Motor de geração de música plugável
+## ✅ Project Status
+*End-to-end autonomous pipeline*  
+Agent-oriented and decoupled architecture  
+Pluggable music generation engine
 
 ---
 
-## 🎵 Motor de Geração de Música
-| Estado        | Tecnologia                             | Propósito                     |
-|---------------|----------------------------------------|-------------------------------|
-| **teste**     | Gerador mock (.wav)                    | Validação do pipeline         |
-| **Produção**  | MusicGen (Meta) via Replicate API      | Geração real                  |
-| **Extensível**| Riffusion, Suno, Diff-Singer           | Flexibilidade futura          |
+## 🎵 Music Generation Engine
+| State        | Technology                             | Purpose                        |
+|--------------|----------------------------------------|--------------------------------|
+| **Test**     | Mock generator (.wav)                   | Pipeline validation             |
+| **Production**| MusicGen (Meta) via Replicate API     | Real music generation           |
+| **Extensible**| Riffusion, Suno, Diff-Singer          | Future flexibility              |
 
-> O motor de IA é abstraído e consumido via API (Replicate), permitindo troca de modelos sem impacto no pipeline ou nos agentes downstream.
-
----
-## Execução Autônoma
-- Execução via `run_pipeline.py`
-- Preparado para agendamento recorrente (cron / Task Scheduler)
+> The AI engine is abstracted and consumed via API (Replicate), allowing model swaps without impacting the pipeline or downstream agents.
 
 ---
 
-## Validação Técnica
-- Pipeline baseado em agentes (MusicAgent, BillingAgent, MarketingAgent)
-- Interface padronizada (`run()`) entre agentes
-- Execução end-to-end validada
-- Geração real de áudio .wav (PCM 16-bit)
-- Artefatos persistidos em `storage/`
-
-> O gerador mock é utilizado para testes e validação sem dependência de modelos externos.
+## Autonomous Execution
+- Run via `run_pipeline.py`
+- Ready for recurring scheduling (cron / Task Scheduler)
 
 ---
 
-## Seleção de Motor
-**Seleção dinâmica via configuração** (USE_MUSICGEN = True  # True = IA | False = mock) 
-- **Mock:** testes rápidos e CI
-- **MusicGen (Replicate):** geração real via IA
+## Technical Validation
+- Agent-based pipeline (MusicAgent, BillingAgent, MarketingAgent)
+- Standardized interface (`run()`) between agents
+- End-to-end execution validated
+- Real .wav audio generation (16-bit PCM)
+- Artifacts persisted in `storage/`
 
-> A troca de motor não altera a lógica do pipeline, garantindo flexibilidade e extensibilidade.
+> The mock generator is used for testing and validation without external model dependencies.
 
 ---
 
-## Agendamento & Logging
-- Pipeline preparado para execução automática
-- Logs centralizados em `pipeline.log`
-- Rastreabilidade de:
-  - Execução
-  - Geração de música
-  - Billing
-  - Publicação
+## Engine Selection
+**Dynamic selection via configuration** (`USE_MUSICGEN = True  # True = AI | False = mock`)  
+- **Mock:** Fast tests and CI  
+- **MusicGen (Replicate):** Real AI generation  
+
+> Engine swap does not change pipeline logic, ensuring flexibility and extensibility.
+
+---
+
+## Scheduling & Logging
+- Pipeline ready for automatic execution  
+- Centralized logs in `pipeline.log`  
+- Traceability for:  
+  - Execution  
+  - Music generation  
+  - Billing  
+  - Publishing
 
 ---
 
 ## Marketing Agent
-- Publicação automática via Telegram Bot API
-- Upload de mídia e mensagens automatizadas
-- Arquitetura preparada para múltiplos canais (Instagram, X)
+- Automated publishing via Telegram Bot API  
+- Automated media upload and messaging  
+- Architecture ready for multiple channels (Instagram, X)
 
 ---
 
 ## Billing Agent
-**Monetização sem login**  
-Rate limiting + pay-per-use
+**Login-free monetization**  
+Rate limiting + pay-per-use  
 
-**Regras:**
-- Free diário: 4 gerações
-- Reset automático diário
-- Créditos pagos priorizados
-- Decisão explícita no pipeline (ALLOW | BLOCK)
-
----
-
-## Controle de Acesso
-- Identificação stateless via hash MD5(IP + User-Agent)
-- Persistência em JSON (`billing_db.json`)
-- Pronto para migração para banco relacional
+**Rules:**  
+- Daily free: 4 generations  
+- Automatic daily reset  
+- Paid credits prioritized  
+- Explicit decision in pipeline (ALLOW | BLOCK)
 
 ---
 
-## Stack Técnica
+## Access Control
+- Stateless identification via MD5 hash(IP + User-Agent)  
+- Persisted in JSON (`billing_db.json`)  
+- Ready for relational database migration
+
+---
+
+## Tech Stack
 **Frontend:** HTML, CSS Grid/Flex, Vanilla JS  
 **Backend:** Flask, subprocess, hashlib  
-**IA:** MusicGen via Replicate API (plugável)  
-**Pagamentos:** Stripe Checkout + Webhooks  
-**Persistência:** JSON file-based (pronto para Supabase/PostgreSQL)
+**AI:** MusicGen via Replicate API (pluggable)  
+**Payments:** Stripe Checkout + Webhooks  
+**Persistence:** JSON file-based (ready for Supabase/PostgreSQL)
