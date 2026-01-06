@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudMusic</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg"> <!--FAVICOIN --> 
+    
+    <header>
+        <h1 id="siteLogo" style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+            
+            <span style="display: flex; align-items: baseline;">
+                <span style="letter-spacing: 0.5px;">Cl</span>
+                <span class="vinyl-container" style="position: relative; top: 12px;">
+                    <span class="vinyl-disk">
+                        <span class="vinyl-center"></span>
+                    </span>
+                    <span class="vinyl-hidden-char">o</span>
+                </span>
+                <span style="letter-spacing: 0.5px;">udMusic</span>
+            </span>
+        </h1>
+        <p class="subtitle">AI-powered loops & assets for DJs/producers</p>
+    </header>
+
+        <!-- MODE SELECTION -->
+        <section class="mode-select" id="modeSection">
+            <h2 style="text-align: center;">Choose generation mode:</h2>
+            <div class="mode-cards">
+                <div class="mode-card" data-mode="guided">
+                    <h3>Guided</h3>
+                    <p>Select loop type and adjust parameters</p>
+                </div>
+                <div class="mode-card" data-mode="advanced">
+                    <h3>⚡ Advanced</h3>
+                    <p>Free prompt with AI control</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GUIDED UI (hidden initially) -->
+        <section class="guided-ui hidden" id="guidedUI">
+            <h2 style="text-align: center;">Customize your loop</h2>
+            
+            <div class="card-grid">
+                <div class="type-card" data-type="kick">¿Kick?</div>
+                <div class="type-card" data-type="bass">🎸 Bass</div>
+                <div class="type-card" data-type="texture">✨ Texture</div>
+                <div class="type-card" data-type="riser">🚀 Riser</div>
+            </div>
+
+            <div class="controls">
+                <div class="slider-group">
+                    <label>BPM: <span id="bpmValue">128</span></label>
+                    <input type="range" min="70" max="180" value="128" class="slider" id="bpmSlider">
+                </div>
+                
+                <div class="slider-group">
+                    <label>Intensity: <span id="intensityValue">3</span></label>
+                    <input type="range" min="1" max="5" value="3" class="slider" id="intensitySlider">
+                </div>
+                
+                <div class="slider-group">
+                    <label>Duration: <span id="durationValue">4</span>s</label>
+                    <input type="range" min="2" max="30" value="4" class="slider" id="durationSlider">
+                </div>
+            </div>
+
+            <div class="toggles">
+                <div class="toggle-group">
+                    <label class="toggle">
+                        <input type="checkbox" id="darkToggle">
+                        <span>Dark</span>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox" id="ambientToggle">
+                        <span>Ambient</span>
+                    </label>
+                    <label class="toggle">
+                        <input type="checkbox" id="energeticToggle">
+                        <span>Energetic</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADVANCED UI (hidden initially) -->
+        <section class="advanced-ui hidden" id="advancedUI">
+            <h2>Describe your loop</h2>
+            <textarea id="promptInput" placeholder="Example: 'Latin acoustic pop loop, upbeat and playful, nylon guitar rhythm, hand percussion, 114 BPM, 14 seconds.'"></textarea>
+            <p class="hint">Be specific: include genre, instruments, mood, BPM</p>
+        </section>
+
+        <!-- GENERATE BUTTON -->
+        <button class="generate-btn hidden" id="generateBtn">Generate Loop</button>
+
+        <!-- RESULTS (hidden initially) -->
+        <section class="results hidden" id="resultsSection">
+    <audio id="audioPlayer" controls>
+        <source src="" type="audio/wav">
+    </audio>
+
+    <div class="actions">
+        <button id="downloadBtn">Download WAV</button>
+        <button id="newLoopBtn">Create New Loop</button>
+    </div>
+</section>
+        <footer>
+            <p>Pipeline status: <span class="status" id="pipelineStatus">Ready</span></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <!-- LINKS FOOTER -->
+    <div style="position: fixed; bottom: 20px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 20px;">
+        <!-- Telegram -->
+        <a href="https://t.me/+SpSViKXY6SE4YzIx" target="_blank" 
+           style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #8a2be2; font-size: 14px;">
+           <span class="telegram-badge">✈</span>
+            <span>Join our <strong>Telegram</strong> channel to receive exclusive content</span>
+        </a>
+        
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/arthur-vesaro-798318239/" target="_blank"
+           style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #666; font-size: 14px;">
+            <span>© Arthur Vesaro</span>
+            <span class="linkedin-badge">in</span>
+        </a>
+    </div>
+
+<!-- BLOCKED MODAL -->
+<div id="blockedModal" class="modal hidden">
+    <div class="modal-content">
+        <h2>🚫 Daily Limit Reached</h2>
+        <p>You've used your <strong>4</strong> free generations today.</p>
+        
+        <div class="options">
+            <div class="option">
+                <h3>🕒 Wait 24h</h3>
+                <p>Free limit resets tomorrow</p>
+            </div>
+            
+            <div class="option" id="buyCreditsOption">
+                <h3>💎 Buy Credits</h3>
+                <p>$4 → 40 credits</p>
+                <button type="button" onclick="buyCredits()">Buy Now</button>
+
+            </div>
+        </div>
+        
+        <button onclick="closeModal()">Close</button>
+    </div>
+</div>
+</body>
+</html>
