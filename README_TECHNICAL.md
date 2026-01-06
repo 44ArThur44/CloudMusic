@@ -1,4 +1,5 @@
-# CloudMusic Generator
+<h1 align="center">CloudMusic Generator</h1>
+
 
 ## 🎯 Objective
 Autonomous pipeline for AI music generation with IP & User-Agent access control, usage management, and automated social media publishing.
