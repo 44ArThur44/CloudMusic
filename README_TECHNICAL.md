@@ -14,7 +14,7 @@ Developed in **Python 3.8**, compatible with **3.10** (5/5) and **3.11** (5/3)
 
 ## Project Structure
 
-
+```
 CloudWalkMusic/
 ├─ venv/                      # Ambiente Python isolado
 ├─ agents/                    # Agentes do sistema
@@ -44,7 +44,7 @@ CloudWalkMusic/
 ├─ run_pipeline.py            # Orquestração end-to-end do pipeline
 ├─ requirements.txt           # Dependências do projeto
 └─ README.md                  # Documentação principal
-
+```
 
 **Architecture**
 
@@ -141,3 +141,9 @@ Rate limiting + pay-per-use
 **AI:** MusicGen via Replicate API (pluggable)  
 **Payments:** Stripe Checkout + Webhooks  
 **Persistence:** JSON file-based (ready for Supabase/PostgreSQL)
+
+<p align="center">
+  &copy; <a href="https://www.linkedin.com/in/arthur-vesaro-798318239/" target="_blank" rel="noopener noreferrer">
+    Arthur Vesaro
+  </a>
+</p>
