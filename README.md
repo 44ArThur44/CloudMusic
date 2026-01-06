@@ -1,139 +1,83 @@
-#  CloudMusic Generator
+<h1 align="center">CloudMusic</h1>
+<h3 align="center">AI-powered loops & assets for DJs/producers</h3>
 
-## 🎯 Objetivo
-Pipeline autônomo para geração de música com I.A., com controle de acesso vai endereço IP e User-Agent, gestão de consumo e automação de publicações para redes sociais.
-
----
-
-## Configuração do Ambiente
-Desenvolvido em **Python 3.8**, com compatibilidade em Python **3.10** (5/5) e **3.11.** (5/3)
-
-–> **venv** Ambiente virtual para isolar as dependências do projeto
+<p align="center">
+  <em>Autonomous music generation platform with usage limits, billing, and automated distribution.</em>
+</p>
 
 ---
 
-##  Estrutura do Projeto
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/05fde367-f9a2-4a05-a6bd-c401d21d0cd8" width="800" alt="CloudMusic Dashboard Screenshot" />
+  <br>
+  <em>Screenshot of the main dashboard showing guided & advanced modes, and player interface.</em>
+</p>
 
-CloudWalkMusic/
-├─ venv/                      # Ambiente Python isolado
-├─ agents/                    # Agentes do sistema
-│  ├─ __init__.py
-│  ├─ music_agent.py          # Orquestrador de geração musical
-│  ├─ music_agent_mock.py     # Gerador mock (teste e validação do pipeline)
-│  ├─ music_agent_musicgen.py # Gerador real via MusicGen
-│  ├─ billing_agent.py        # Controle de acesso / monetização
-│  └─ marketing_agent.py      # Divulgação e teasers
-├─ storage/                   # Arquivos gerados (músicas e prompts)
-│  ├─ music_001.wav
-│  └─ last_prompt.txt
-├─ data/                      # Dados do sistema (ex: banco de faturamento)
-│  └─ billing_db.json
-├─ app/                       # Aplicação web
-│  └─ static/                 # Arquivos estáticos
-│     ├─ favicon.svg
-│     ├─ styles.css
-│     └─ script.js
-├─ templates/                 # Templates HTML
-│  ├─ index.html
-│  └─ main.py
-├─ docs/                      # Documentação adicional
-│  └─ scheduler.md
-├─ logger.py                  # Configuração de logs
-├─ pipeline.log               # Logs de execução do pipeline
-├─ run_pipeline.py            # Orquestração end-to-end do pipeline
-├─ requirements.txt           # Dependências do projeto
-└─ README.md                  # Documentação principal
+## Overview
+End-to-end pipeline built with a decoupled agent architecture to generate music, enforce access rules, and distribute releases automatically.
 
-**Arquitetura**
+Designed as an MVP with production-ready structure and extensibility.
 
-Pipeline baseado em agentes, com responsabilidades definidas:
+### Core Technical Features
 
-**MusicAgent → Storage → BillingAgent → MarketingAgent**
+#### 🎵 **Pluggable AI Music Engine**
+- Production: MusicGen (Meta) via Replicate API
+- Development: Mock generator for rapid testing
+- Extensible architecture for Riffusion, Suno, Diff-Singer
+- Seamless engine swapping without pipeline disruption
 
+#### 🔒 **Stateless Access Control**
+- Anonymous user identification via MD5(IP + User-Agent)
+- Daily rate limiting 
+- Automated daily reset system
+- Priority queuing for paid credits
 
-## ✅ Status do Projeto
-*Pipeline autônomo end-to-end*
-Arquitetura orientada a agentes e desacoplada  
-Motor de geração de música plugável
+#### 💳 **Integrated Monetization**
+- Stripe Checkout with webhook validation
+- Pay-per-use billing model
+- Explicit pipeline decisions (ALLOW/BLOCK)
+- No traditional login required
 
----
+#### 🤖 **Automated Distribution**
+- Telegram Bot API integration
+- Multi-channel ready architecture (Instagram, X)
+- Automated media upload and messaging
+- Centralized logging and tracking
 
-## 🎵 Motor de Geração de Música
-| Estado        | Tecnologia                             | Propósito                     |
-|---------------|----------------------------------------|-------------------------------|
-| **teste**     | Gerador mock (.wav)                    | Validação do pipeline         |
-| **Produção**  | MusicGen (Meta) via Replicate API      | Geração real                  |
-| **Extensível**| Riffusion, Suno, Diff-Singer           | Flexibilidade futura          |
+### Technical Stack
 
-> O motor de IA é abstraído e consumido via API (Replicate), permitindo troca de modelos sem impacto no pipeline ou nos agentes downstream.
+| Layer | Technologies |
+|-------|--------------|
+| **Backend** | Python, Flask, Agent Architecture |
+| **Frontend** | Vanilla JS, HTML5, CSS Grid/Flex |
+| **AI/ML** | MusicGen (Replicate API), Pluggable Engine System |
+| **Payments** | Stripe Checkout, Webhooks |
+| **Storage** | JSON file-based (PostgreSQL/Supabase ready) |
+| **Infrastructure** | Scheduled pipeline (cron/Task Scheduler) |
 
----
-## Execução Autônoma
-- Execução via `run_pipeline.py`
-- Preparado para agendamento recorrente (cron / Task Scheduler)
+### Production Status
+- ✅ End-to-end pipeline validated
+- ✅ Modular architecture ready for scaling
+- ✅ Stateless persistence system
+- ✅ Centralized logging with full traceability
+- ✅ Production-ready MVP
 
----
-
-## Validação Técnica
-- Pipeline baseado em agentes (MusicAgent, BillingAgent, MarketingAgent)
-- Interface padronizada (`run()`) entre agentes
-- Execução end-to-end validada
-- Geração real de áudio .wav (PCM 16-bit)
-- Artefatos persistidos em `storage/`
-
-> O gerador mock é utilizado para testes e validação sem dependência de modelos externos.
+### Roadmap
+- Multi-platform distribution expansion
+- Relational database migration
+- Additional AI music engines
+- Integrated analytics dashboard
+- Public API for third-party integrations
 
 ---
 
-## Seleção de Motor
-**Seleção dinâmica via configuração** (USE_MUSICGEN = True  # True = IA | False = mock) 
-- **Mock:** testes rápidos e CI
-- **MusicGen (Replicate):** geração real via IA
+**Architecture:** Decoupled Agent-Based System  
+**Availability:** 24/7 automated pipeline  
+**Extensibility:** Plug-and-play modules without refactoring
+  
 
-> A troca de motor não altera a lógica do pipeline, garantindo flexibilidade e extensibilidade.
-
----
-
-## Agendamento & Logging
-- Pipeline preparado para execução automática
-- Logs centralizados em `pipeline.log`
-- Rastreabilidade de:
-  - Execução
-  - Geração de música
-  - Billing
-  - Publicação
-
----
-
-## Marketing Agent
-- Publicação automática via Telegram Bot API
-- Upload de mídia e mensagens automatizadas
-- Arquitetura preparada para múltiplos canais (Instagram, X)
-
----
-
-## Billing Agent
-**Monetização sem login**  
-Rate limiting + pay-per-use
-
-**Regras:**
-- Free diário: 4 gerações
-- Reset automático diário
-- Créditos pagos priorizados
-- Decisão explícita no pipeline (ALLOW | BLOCK)
-
----
-
-## Controle de Acesso
-- Identificação stateless via hash MD5(IP + User-Agent)
-- Persistência em JSON (`billing_db.json`)
-- Pronto para migração para banco relacional
-
----
-
-## Stack Técnica
-**Frontend:** HTML, CSS Grid/Flex, Vanilla JS  
-**Backend:** Flask, subprocess, hashlib  
-**IA:** MusicGen via Replicate API (plugável)  
-**Pagamentos:** Stripe Checkout + Webhooks  
-**Persistência:** JSON file-based (pronto para Supabase/PostgreSQL)
+<p align="center">
+  &copy; <a href="https://www.linkedin.com/in/arthur-vesaro-798318239/" target="_blank" rel="noopener noreferrer">
+    Arthur Vesaro
+  </a>
+</p>
